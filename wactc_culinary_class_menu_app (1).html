@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WACTC Culinary Class | The Culinary Room Menu</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            maroon: {
+              50: '#fdf2f4',
+              100: '#fbe5e9',
+              200: '#f7cfd6',
+              300: '#f1abb8',
+              400: '#e77a91',
+              500: '#d74868',
+              600: '#be2b4d',
+              700: '#8b0000',
+              800: '#6b0d1e', /* Signature WACTC Deep Maroon */
+              900: '#4a0814',
+              950: '#2d040b',
+            },
+            cream: {
+              50: '#ffffff',
+              100: '#fdfbf7', /* Soft Warm Cream Background */
+              200: '#f7f2e9',
+              300: '#ede4d3',
+              400: '#dfd2b9',
+            },
+            gold: {
+              300: '#fef08a',
+              400: '#facc15',
+              500: '#d4af37', /* Warm Gold Accent */
+              600: '#ca8a04',
+              700: '#a16207',
+            },
+            charcoal: {
+              800: '#383434',
+              900: '#2c2a2a', /* High-contrast rich text */
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fdfbf7;
+      color: #2c2a2a;
+      overflow-x: hidden;
+    }
+
+    .font-serif-title {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    /* Modern Soft Card Styles */
+    .card-shadow {
+      box-shadow: 0 4px 20px -2px rgba(107, 13, 30, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-shadow-hover:hover {
+      box-shadow: 0 12px 28px -4px rgba(107, 13, 30, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.06);
+      transform: translateY(-2px);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f7f2e9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #6b0d1e;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8b0000;
+    }
+
+    .transition-all-300 {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col bg-cream-100 text-charcoal-900 antialiased selection:bg-maroon-800 selection:text-white">
+
+  <!-- TOP DAILY ANNOUNCEMENT BANNER -->
+  <div id="chefAnnouncementBanner" class="bg-gradient-to-r from-maroon-900 via-maroon-800 to-maroon-900 text-white text-xs sm:text-sm py-2 px-4 shadow-md relative z-40 flex items-center justify-between border-b border-gold-500/30">
+    <div class="max-w-7xl mx-auto flex items-center justify-center gap-2 text-center w-full">
+      <i data-lucide="sparkles" class="w-4 h-4 text-gold-400 shrink-0 animate-pulse"></i>
+      <span id="bannerText" class="font-medium tracking-wide">
+        Welcome to WACTC Culinary Class in The Culinary Room!
+      </span>
+      <span class="hidden md:inline-flex items-center gap-1 px-2.5 py-0.5 text-[11px] bg-white/10 rounded-full font-mono text-gold-300 ml-2 border border-white/20">
+        <i data-lucide="door-open" class="w-3 h-3 text-gold-400"></i> The Culinary Room
+      </span>
+    </div>
+    <button onclick="toggleAnnouncementModal()" id="editBannerBtn" class="hidden text-gold-400 hover:text-white text-xs underline shrink-0 ml-2 font-semibold">
+      Edit Note
+    </button>
+  </div>
+
+  <!-- MAIN BRAND HEADER -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-cream-300 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- School Logo & Title -->
+        <div class="flex items-center gap-3.5 cursor-pointer" onclick="switchTab('menu')">
+          <div class="w-12 h-12 rounded-2xl bg-maroon-800 flex items-center justify-center shadow-md ring-2 ring-gold-500/50 text-gold-400">
+            <i data-lucide="chef-hat" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl sm:text-2xl font-extrabold font-serif-title tracking-tight text-maroon-900">
+                WACTC <span class="text-maroon-700 font-normal">Culinary Class</span>
+              </h1>
+            </div>
+            <p class="text-xs text-charcoal-800/80 font-semibold flex items-center gap-1">
+              <i data-lucide="map-pin" class="w-3 h-3 text-maroon-800"></i> The Culinary Room
+            </p>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="hidden md:flex items-center gap-1 bg-cream-200 p-1.5 rounded-2xl border border-cream-300">
+          <button 
+            onclick="switchTab('menu')" 
+            id="nav-tab-menu"
+            class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-maroon-800 text-white shadow-sm"
+          >
+            <i data-lucide="book-open" class="w-4 h-4 text-gold-400"></i> Menu & Specials
+          </button>
+          <button 
+            onclick="switchTab('instructors')" 
+            id="nav-tab-instructors"
+            class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 text-charcoal-900 hover:bg-white hover:text-maroon-900"
+          >
+            <i data-lucide="award" class="w-4 h-4 text-maroon-800"></i> Meet Our Instructors
+          </button>
+        </nav>
+
+        <!-- Right Side Header Action Buttons -->
+        <div class="flex items-center gap-2.5">
+          
+          <!-- Admin Mode Toggle -->
+          <button 
+            id="modeToggleBtn" 
+            onclick="toggleAdminMode()" 
+            class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold bg-cream-200 hover:bg-cream-300 text-maroon-900 border border-maroon-800/20 transition-all"
+            title="Toggle Admin Mode for Instructors"
+          >
+            <i data-lucide="shield" class="w-4 h-4 text-maroon-800" id="modeIcon"></i>
+            <span id="modeText" class="hidden sm:inline">Customer View</span>
+          </button>
+
+          <!-- Order Plate Drawer Trigger -->
+          <button 
+            onclick="toggleCartDrawer()" 
+            class="relative flex items-center gap-2 px-4 py-2 rounded-xl bg-maroon-800 hover:bg-maroon-700 text-white font-bold text-xs shadow-md transition-all active:scale-95"
+          >
+            <i data-lucide="shopping-bag" class="w-4 h-4 text-gold-400"></i>
+            <span class="hidden sm:inline">My Plate</span>
+            <span id="cartBadge" class="bg-gold-500 text-maroon-950 font-black text-[11px] w-5 h-5 rounded-full flex items-center justify-center">
+              0
+            </span>
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- Mobile Navigation Bar -->
+      <div class="md:hidden flex items-center justify-around py-2.5 border-t border-cream-300 text-xs">
+        <button onclick="switchTab('menu')" id="mob-tab-menu" class="flex flex-col items-center gap-1 text-maroon-800 font-bold py-1">
+          <i data-lucide="book-open" class="w-4 h-4"></i> Menu & Specials
+        </button>
+        <button onclick="switchTab('instructors')" id="mob-tab-instructors" class="flex flex-col items-center gap-1 text-charcoal-800 font-semibold py-1">
+          <i data-lucide="award" class="w-4 h-4"></i> Instructors
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- HERO SECTION WITH MAROON ACCENT & STATS -->
+  <section class="bg-gradient-to-br from-maroon-900 via-maroon-800 to-maroon-950 text-white py-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden shadow-md">
+    <!-- Subtle background accent glow -->
+    <div class="absolute -top-24 -right-20 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+      
+      <div class="max-w-2xl text-center md:text-left">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-gold-300 text-xs font-semibold mb-3">
+          <i data-lucide="utensils" class="w-3.5 h-3.5 text-gold-400"></i> The Culinary Room • Bistro Experience
+        </div>
+        
+        <h2 class="text-3xl sm:text-5xl font-extrabold font-serif-title tracking-tight leading-tight">
+          Crafted Fresh Daily by Our <span class="text-gold-400">Junior Chefs</span>.
+        </h2>
+        
+        <p class="mt-3 text-cream-200 text-sm sm:text-base leading-relaxed">
+          Welcome to <span class="text-white font-bold">WACTC Culinary Class</span> in <span class="text-gold-400 font-semibold">The Culinary Room</span>. Every dish is cooked fresh from scratch by aspiring Junior Chefs learning culinary fundamentals, kitchen precision, and global flavors.
+        </p>
+
+        <!-- Live Statistics Bar -->
+        <div class="mt-6 flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs font-semibold">
+          
+          <div class="flex items-center gap-2 bg-white/10 border border-white/15 px-3.5 py-2 rounded-xl backdrop-blur-sm">
+            <i data-lucide="users" class="w-4 h-4 text-gold-400"></i>
+            <span>Active Trainees: <strong id="statJuniorChefsCount" class="text-white font-mono text-sm font-bold">24 Junior Chefs</strong></span>
+          </div>
+
+          <div class="flex items-center gap-2 bg-white/10 border border-white/15 px-3.5 py-2 rounded-xl backdrop-blur-sm">
+            <i data-lucide="clock" class="w-4 h-4 text-gold-400"></i>
+            <span>Service Hours: <strong class="text-white">10:30 AM - 1:15 PM</strong></span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Quick Special Highlight Card -->
+      <div class="w-full md:w-auto shrink-0">
+        <div class="bg-white text-charcoal-900 rounded-2xl p-5 border-2 border-gold-500 max-w-sm mx-auto shadow-xl relative overflow-hidden group">
+          <div class="absolute -top-3 -right-3 bg-gold-500 text-maroon-950 font-black text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md flex items-center gap-1">
+            <i data-lucide="sparkles" class="w-3 h-3 fill-maroon-950"></i> Featured Daily Special
+          </div>
+          <div class="flex items-center gap-4">
+            <img id="heroFeaturedImg" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80" alt="Special Dish" class="w-20 h-20 rounded-xl object-cover shadow-md group-hover:scale-105 transition-transform duration-300">
+            <div>
+              <span class="text-xs font-bold text-maroon-800 uppercase tracking-wider">Chef's Selection</span>
+              <h3 id="heroFeaturedTitle" class="text-base font-bold text-charcoal-900 leading-snug">Seared Garlic Salmon</h3>
+              <p id="heroFeaturedPrice" class="text-maroon-800 font-extrabold font-mono text-sm mt-0.5">$11.50</p>
+              <button onclick="filterDailySpecialsOnly()" class="mt-2 inline-flex items-center gap-1 text-xs text-maroon-800 hover:text-maroon-600 font-bold">
+                View All Specials <i data-lucide="arrow-right" class="w-3 h-3"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- ADMIN MANAGEMENT PANEL (VISIBLE WHEN ADMIN IS ON) -->
+    <div id="adminControlPanel" class="hidden mb-8 p-6 rounded-2xl bg-white border-2 border-maroon-800 shadow-xl">
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="flex h-3 w-3 relative">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-maroon-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-maroon-800"></span>
+            </span>
+            <h3 class="text-base font-extrabold text-maroon-900 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="shield-check" class="w-5 h-5 text-maroon-800"></i> Instructor Admin Portal
+            </h3>
+          </div>
+          <p class="text-xs text-charcoal-800/80 mt-1 font-medium">Manage Junior Chefs counter, add/edit menu creations, toggle daily specials, or update instructor profiles.</p>
+        </div>
+
+        <!-- Admin Quick Tools -->
+        <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+          
+          <!-- Live Junior Chef Counter Editor -->
+          <div class="flex items-center gap-2 bg-cream-200 border border-maroon-800/20 px-3.5 py-1.5 rounded-xl">
+            <i data-lucide="users" class="w-4 h-4 text-maroon-800 shrink-0"></i>
+            <span class="text-xs text-charcoal-900 font-bold">Junior Chefs:</span>
+            <input 
+              type="number" 
+              id="adminChefCountInput" 
+              min="1" 
+              max="100" 
+              class="w-14 bg-white border border-maroon-800/30 rounded-lg px-2 py-1 text-xs text-center text-maroon-900 font-bold font-mono focus:outline-none focus:border-maroon-800"
+              onchange="updateJuniorChefCount(this.value)"
+            >
+          </div>
+
+          <button 
+            onclick="openAddDishModal()" 
+            class="flex items-center gap-2 bg-maroon-800 hover:bg-maroon-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md transition-all"
+          >
+            <i data-lucide="plus-circle" class="w-4 h-4 text-gold-400"></i> Add New Dish
+          </button>
+
+          <button 
+            onclick="openAddInstructorModal()" 
+            class="flex items-center gap-2 bg-cream-200 hover:bg-cream-300 text-maroon-900 font-bold border border-maroon-800/30 px-3.5 py-2 rounded-xl text-xs transition-all"
+          >
+            <i data-lucide="user-plus" class="w-4 h-4 text-maroon-800"></i> Add Instructor
+          </button>
+
+          <button 
+            onclick="toggleAnnouncementModal()" 
+            class="flex items-center gap-2 bg-cream-200 hover:bg-cream-300 text-maroon-900 font-bold border border-maroon-800/30 px-3.5 py-2 rounded-xl text-xs transition-all"
+          >
+            <i data-lucide="megaphone" class="w-4 h-4 text-maroon-800"></i> Edit Note
+          </button>
+
+          <button 
+            onclick="confirmResetAll()" 
+            class="flex items-center gap-2 bg-cream-200 hover:bg-rose-100 text-rose-800 border border-rose-300 font-bold px-3 py-2 rounded-xl text-xs transition-all"
+            title="Reset to default menu and instructors"
+          >
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reset All
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- VIEW TAB 1: MENU & DAILY SPECIALS -->
+    <div id="view-menu" class="space-y-8">
+      
+      <!-- DAILY DISHES & FEATURED SPECIALS HIGHLIGHT SPOTLIGHT -->
+      <section id="dailyDishesSpotlight" class="bg-white rounded-3xl p-6 border-2 border-gold-500/60 card-shadow">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-cream-300">
+          <div>
+            <span class="px-3 py-1 rounded-full bg-gold-500/20 text-maroon-900 border border-gold-500/40 text-xs font-black uppercase tracking-wider inline-flex items-center gap-1.5 mb-1.5">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold-600 fill-gold-600"></i> Today's Selected Highlights
+            </span>
+            <h2 class="text-2xl font-extrabold font-serif-title text-maroon-900">Daily Dishes & Chef Specials</h2>
+            <p class="text-xs sm:text-sm text-charcoal-800/80">Fresh creations prepared specially for today's dining service by our Junior Chefs.</p>
+          </div>
+          <button onclick="filterDailySpecialsOnly()" class="text-xs font-bold text-maroon-800 hover:text-maroon-600 flex items-center gap-1 bg-cream-200 px-3 py-1.5 rounded-xl border border-maroon-800/20">
+            Filter Specials Only <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Daily Specials Horizontal Grid -->
+        <div id="dailyDishesHighlightGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- JS Dynamic Daily Dishes Cards -->
+        </div>
+      </section>
+
+      <!-- FULL MENU SEARCH & FILTERS TOOLBAR -->
+      <div class="space-y-4">
+        
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          
+          <!-- Category Pills -->
+          <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none" id="categoryContainer">
+            <!-- Rendered via JS -->
+          </div>
+
+          <!-- Live Search Box -->
+          <div class="relative w-full md:w-72">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-charcoal-800/50"></i>
+            <input 
+              type="text" 
+              id="searchInput" 
+              placeholder="Search dishes or ingredients..."
+              class="w-full bg-white border border-cream-300 rounded-xl pl-10 pr-8 py-2 text-xs sm:text-sm text-charcoal-900 placeholder-charcoal-800/40 focus:outline-none focus:border-maroon-800 shadow-sm"
+              oninput="handleSearch(this.value)"
+            >
+            <button id="clearSearchBtn" onclick="handleSearch('')" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-charcoal-800/50 hover:text-maroon-900">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Secondary Toolbar: Dietary Badges & Availability Toggle -->
+        <div class="flex flex-wrap items-center justify-between gap-3 text-xs border-t border-cream-300 pt-3">
+          
+          <div class="flex items-center gap-2 overflow-x-auto py-0.5">
+            <span class="text-charcoal-800/70 font-bold flex items-center gap-1 shrink-0">
+              <i data-lucide="filter" class="w-3.5 h-3.5 text-maroon-800"></i> Dietary:
+            </span>
+            <button onclick="setDietaryFilter('ALL')" id="tag-ALL" class="dietary-btn px-3 py-1 rounded-lg border font-bold bg-maroon-800 border-maroon-800 text-white">
+              All
+            </button>
+            <button onclick="setDietaryFilter('Vegetarian')" id="tag-Vegetarian" class="dietary-btn px-3 py-1 rounded-lg border border-cream-300 bg-white text-charcoal-800 font-semibold hover:border-maroon-800">
+              🌱 Vegetarian
+            </button>
+            <button onclick="setDietaryFilter('Vegan')" id="tag-Vegan" class="dietary-btn px-3 py-1 rounded-lg border border-cream-300 bg-white text-charcoal-800 font-semibold hover:border-maroon-800">
+              🌿 Vegan
+            </button>
+            <button onclick="setDietaryFilter('Gluten-Free')" id="tag-Gluten-Free" class="dietary-btn px-3 py-1 rounded-lg border border-cream-300 bg-white text-charcoal-800 font-semibold hover:border-maroon-800">
+              🌾 Gluten-Free
+            </button>
+            <button onclick="setDietaryFilter('Nut-Free')" id="tag-Nut-Free" class="dietary-btn px-3 py-1 rounded-lg border border-cream-300 bg-white text-charcoal-800 font-semibold hover:border-maroon-800">
+              🥜 Nut-Free
+            </button>
+          </div>
+
+          <div class="flex items-center gap-3 shrink-0">
+            <label class="flex items-center gap-2 cursor-pointer text-charcoal-800 font-medium hover:text-maroon-900">
+              <input type="checkbox" id="availableOnlyToggle" onchange="toggleAvailableOnly(this.checked)" class="rounded bg-white border-cream-300 text-maroon-800 focus:ring-maroon-800">
+              <span>Hide Sold Out</span>
+            </label>
+            <span id="resultsCount" class="text-maroon-900 bg-cream-200 px-2.5 py-1 rounded-md border border-cream-300 font-mono text-[11px] font-bold">
+              0 items
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- MAIN DISH CARDS GRID -->
+      <div id="dishesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Rendered via JS -->
+      </div>
+
+    </div>
+
+
+    <!-- VIEW TAB 2: MEET OUR INSTRUCTORS PAGE -->
+    <div id="view-instructors" class="hidden space-y-8">
+      
+      <div class="bg-white rounded-3xl p-8 border border-cream-300 text-center max-w-3xl mx-auto card-shadow">
+        <div class="w-16 h-16 rounded-2xl bg-maroon-800 text-gold-400 flex items-center justify-center mx-auto mb-4 shadow-lg ring-4 ring-cream-200">
+          <i data-lucide="award" class="w-8 h-8"></i>
+        </div>
+        <h2 class="text-3xl font-extrabold font-serif-title text-maroon-900">Meet Our Chef Instructors</h2>
+        <p class="text-charcoal-800/80 text-sm mt-2 leading-relaxed font-medium">
+          The culinary mentors guiding the next generation of chefs in <span class="text-maroon-800 font-bold">The Culinary Room</span>. Our instructors bring real-world industry experience, classical mastery, and a passion for teaching to WACTC.
+        </p>
+      </div>
+
+      <!-- Instructors Cards Grid -->
+      <div id="instructorsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- JS rendered instructor profiles -->
+      </div>
+
+    </div>
+
+
+    <!-- EMPTY STATE WHEN NO MATCHES -->
+    <div id="emptyState" class="hidden text-center py-16 px-4 bg-white rounded-3xl border border-cream-300 my-8 card-shadow">
+      <div class="w-16 h-16 bg-cream-200 text-maroon-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-cream-300">
+        <i data-lucide="utensils-crossed" class="w-8 h-8"></i>
+      </div>
+      <h3 class="text-xl font-bold text-maroon-900 mb-1">No Culinary Creations Found</h3>
+      <p class="text-charcoal-800/70 text-sm max-w-md mx-auto mb-6">We couldn't find any dishes matching your current filter or search term in The Culinary Room today.</p>
+      <button onclick="resetFilters()" class="px-5 py-2.5 bg-maroon-800 hover:bg-maroon-700 text-white font-bold rounded-xl text-xs shadow-md transition-all">
+        Reset All Filters
+      </button>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-maroon-900 text-white mt-16 py-12 text-xs border-t-4 border-gold-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-8 h-8 rounded-lg bg-gold-500 flex items-center justify-center text-maroon-950 font-bold">
+              <i data-lucide="chef-hat" class="w-5 h-5"></i>
+            </div>
+            <span class="text-white font-bold text-base font-serif-title">WACTC Culinary Class</span>
+          </div>
+          <p class="text-cream-200 leading-relaxed">
+            Training future culinary leaders through hands-on technical education, classic bistro service, and farm-to-table culinary arts in <strong class="text-white">The Culinary Room</strong>.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-gold-400 font-bold text-sm mb-3 uppercase tracking-wider">The Culinary Room Info</h4>
+          <ul class="space-y-2 text-cream-200">
+            <li class="flex justify-between border-b border-white/10 pb-1"><span>Active Junior Chefs:</span> <span class="text-gold-300 font-mono font-bold" id="footerChefCount">24</span></li>
+            <li class="flex justify-between border-b border-white/10 pb-1"><span>Bistro Hours:</span> <span class="text-white font-medium">Tue - Fri: 10:30 AM - 1:15 PM</span></li>
+            <li class="flex justify-between"><span>Location:</span> <span class="text-white font-semibold">The Culinary Room (Station 4)</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-gold-400 font-bold text-sm mb-3 uppercase tracking-wider">Dietary Key</h4>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <span class="flex items-center gap-1.5 bg-white/10 p-2 rounded-lg border border-white/10"><span class="text-emerald-400">🌱</span> Vegetarian</span>
+            <span class="flex items-center gap-1.5 bg-white/10 p-2 rounded-lg border border-white/10"><span class="text-emerald-400">🌿</span> Vegan</span>
+            <span class="flex items-center gap-1.5 bg-white/10 p-2 rounded-lg border border-white/10"><span class="text-gold-400">🌾</span> Gluten-Free</span>
+            <span class="flex items-center gap-1.5 bg-white/10 p-2 rounded-lg border border-white/10"><span class="text-blue-300">🥜</span> Nut-Free</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between text-cream-200/80 text-[11px]">
+        <p>© <span id="yearSpan">2026</span> WACTC Culinary Class. All rights reserved.</p>
+        <p class="mt-2 sm:mt-0 flex items-center gap-1">
+          Crafted with passion by WACTC Junior Chefs <i data-lucide="heart" class="w-3.5 h-3.5 text-gold-400 fill-gold-400"></i>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MY PLATE ORDER DRAWER -->
+  <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden" role="dialog" aria-modal="true">
+    <div class="absolute inset-0 bg-maroon-950/60 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer()"></div>
+
+    <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+      <div class="w-screen max-w-md bg-white border-l border-cream-300 shadow-2xl flex flex-col">
+        
+        <!-- Drawer Header -->
+        <div class="p-6 bg-maroon-800 text-white flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gold-500 text-maroon-950 flex items-center justify-center font-bold">
+              <i data-lucide="utensils" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="text-lg font-bold font-serif-title">My Order Plate</h2>
+              <p class="text-xs text-cream-200">Selected dishes from The Culinary Room</p>
+            </div>
+          </div>
+          <button onclick="toggleCartDrawer()" class="text-cream-200 hover:text-white p-2 rounded-lg hover:bg-maroon-700">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Drawer Items List -->
+        <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cartItemsList">
+          <!-- JS dynamic render -->
+        </div>
+
+        <!-- Drawer Footer -->
+        <div class="p-6 bg-cream-100 border-t border-cream-300 space-y-4">
+          <div class="space-y-2 text-sm text-charcoal-800">
+            <div class="flex justify-between font-medium">
+              <span>Subtotal</span>
+              <span id="cartSubtotal" class="font-mono font-bold text-maroon-900">$0.00</span>
+            </div>
+            <div class="flex justify-between text-base font-extrabold text-maroon-900 border-t border-cream-300 pt-2">
+              <span>Estimated Total</span>
+              <span id="cartTotal" class="font-mono text-maroon-800">$0.00</span>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <button 
+              onclick="submitSimulatedOrder()" 
+              id="submitOrderBtn" 
+              class="w-full py-3 bg-maroon-800 hover:bg-maroon-700 text-white font-extrabold rounded-xl text-sm shadow-md transition-all flex items-center justify-center gap-2"
+            >
+              <i data-lucide="check-circle" class="w-4 h-4 text-gold-400"></i> Show Plate Summary to Junior Chef
+            </button>
+            <button 
+              onclick="clearCart()" 
+              class="w-full py-2 bg-cream-200 hover:bg-cream-300 text-charcoal-800 rounded-xl text-xs font-semibold transition-all border border-cream-300"
+            >
+              Clear Plate
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT DISH MODAL (ADMIN MODE) -->
+  <div id="dishModal" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 bg-maroon-950/70 backdrop-blur-sm transition-opacity" onclick="closeDishModal()"></div>
+
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+
+      <div class="inline-block align-bottom bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full border border-cream-300">
+        
+        <div class="p-6 bg-maroon-800 text-white flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gold-500 text-maroon-950 flex items-center justify-center font-bold">
+              <i data-lucide="edit-3" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold font-serif-title" id="dishModalTitle">
+              Add New Junior Chef Creation
+            </h3>
+          </div>
+          <button onclick="closeDishModal()" class="text-cream-200 hover:text-white p-1 rounded-lg">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <form id="dishForm" onsubmit="handleDishSubmit(event)" class="p-6 space-y-4">
+          <input type="hidden" id="dishFormId" value="">
+
+          <div>
+            <label class="block text-xs font-bold text-maroon-900 uppercase tracking-wider mb-1">Dish Name *</label>
+            <input type="text" id="dishFormTitle" required placeholder="e.g. Truffle Herb Grilled Chicken" class="w-full bg-cream-100 border border-cream-300 rounded-xl px-3.5 py-2 text-sm text-charcoal-900 focus:outline-none focus:border-maroon-800 font-medium">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-maroon-900 uppercase tracking-wider mb-1">Category *</label>
+              <select id="dishFormCategory" required class="w-full bg-cream-100 border border-cream-300 rounded-xl px-3.5 py-2 text-sm text-charcoal-900 focus:outline-none focus:border-maroon-800 font-medium">
+                <option value="starters">Appetizers & Starters</option>
+                <option value="entrees">Main Entrees</option>
+                <option value="desserts">Handcrafted Desserts</option>
+                <option value="beverages">Seasonal Beverages</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-maroon-900 uppercase tracking-wider mb-1">Price ($) *</label>
+              <input type="number" step="0.25" min="0" id="dishFormPrice" required placeholder="9.50" class="w-full bg-cream-100 border border-cream-300 rounded-xl px-3.5 py-2 text-sm text-charcoal-900 focus:outline-none focus:border-maroon-800 font-mono font-bold">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-maroon-900 uppercase tracking-wider mb-1">Description & Key Ingredients *</label>
+            <textarea id="dishFormDesc" rows="3" required placeholder="Describe cooking technique, flavor profile, and ingredients..." class="w-full bg-cream-100 border border-cream-300 rounded-xl px-3.5 py-2 text-sm text-charcoal-900 focus:outline-none focus:border-maroon-800 font-medium"></textarea>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-xs font-bold text-maroon-900 uppercase tracking-wider">Image URL</label>
+              <span class="text-[11px] text-maroon-800 font-semibold">Quick image presets:</span>
+            </div>
+            <input type="url" id="dishFormImage" placeholder="https://images.unsplash.com/..." class="w-full bg-cream-100 border border-cream-300 rounded-xl px-3.5 py-2 text-xs text-charcoal-900 focus:outline-none focus:border-maroon-800 font-mono mb-2">
+            
+            <div class="flex flex-wrap gap-1.5 text-[11px]">
+              <button type="button" onclick="setPresetImage('burger')" class="px-2 py-1 rounded bg-cream-200 hover:bg-cream-300 text-maroon-900 font-bold border border-cream-300">🍔 Burger</button>
+              <button type="button" onclick="setPresetImage('salmon')" class="px-2 py-1 rounded bg-cream-200 hover:bg-cream-300 text-maroon-900 font-bold border border-cream-300">🐟 Salmon</button>
+              <button type="button" onclick="setPresetImage('pasta')" class="px-2 py-1 rounded bg-cream-200 hover:bg-cream-300 text-maroon-900 font-bold border border-cream-300">🍝 Pasta</button>
+              <button type="button" onclick="setPresetImage('salad')" class="px-2 py-1 rounded bg-cream-200 hover:bg-cream-300 text-maroon-900 font-bold border border-cream-300">🥗 Salad</button>
+              <button type="button" onclick="setPresetImage('steak')" class="px-2 py-1 rounded bg-cream-200 hover:bg-cream-300 text-maroon-900 font-bold border border-cream-300">🥩 Steak</button>
+              <button type="button" onclick="setPresetImage('dessert')" class="px-2 py-1 rounded bg-cream-200 hover:bg-cream-300 text-maroon-900 font-bold border border-cream-300">🍰 Dessert</button>
+              <button type="button" onclick="setPresetImage('drink')" class="px-2 py-1 rounded bg-cream-200 hover:bg-cream-300 text-maroon-900 font-bold border border-cream-300">🍹 Drink</button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-maroon-900 uppercase tracking-wider mb-1">Junior Chef Credit / Prep Note</label>
+            <input type="text" id="dishFormChefNote" placeholder="e.g. Knife Skills Class • Uniform Batonnet Cut" class="w-full bg-cream-100 border border-cream-300 rounded-xl px-3.5 py-2 text-sm text-charcoal-900 focus:outline-none focus:border-maroon-800">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-maroon-900 uppercase tracking-wider mb-2">Dietary Badges</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-medium">
+              <label class="flex items-center gap-1.5 p-2 rounded-lg bg-cream-100 border border-cream-300 cursor-pointer">
+                <input type="checkbox" id="tagVegetarian" class="rounded border-cream-300 text-maroon-800 focus:ring-maroon-800">
+                <span>Vegetarian</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2 rounded-lg bg-cream-100 border border-cream-300 cursor-pointer">
+                <input type="checkbox" id="tagVegan" class="rounded border-cream-300 text-maroon-800 focus:ring-maroon-800">
+                <span>Vegan</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2 rounded-lg bg-cream-100 border border-cream-300 cursor-pointer">
+                <input type="checkbox" id="tagGlutenFree" class="rounded border-cream-300 text-maroon-800 focus:ring-maroon-800">
+                <span>Gluten-Free</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2 rounded-lg bg-cream-100 border border-cream-300 cursor-pointer">
+                <input type="checkbox" id="tagNutFree" class="rounded border-cream-300 text-maroon-800 focus:ring-maroon-800">
+                <span>Nut-Free</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-cream-300">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="dishFormAvailable" checked class="w-4 h-4 rounded text-maroon-800 focus:ring-maroon-800">
+              <span class="text-xs font-bold text-charcoal-900">In Stock / Available</span>
+            </label>
+
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="dishFormDaily" class="w-4 h-4 rounded text-maroon-800 focus:ring-maroon-800">
+              <span class="text-xs font-extrabold text-maroon-800">Feature in Today's Daily Specials ⭐</span>
+            </label>
+          </div>
+
+          <div class="flex justify-end gap-3 pt-4 border-t border-cream-300">
+            <button type="button" onclick="closeDishModal()" class="px-4 py-2 bg-cream-200 hover:bg-cream-300 text-charcoal-800 font-bold rounded-xl text-xs">
+              Cancel
+            </button>
+            <button type="submit" class="px-5 py-2 bg-maroon-800 hover:bg-maroon-700 text-white font-bold rounded-xl text-xs shadow-md">
+              Save Creation
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT CHEF INSTRUCTOR MODAL -->
+  <div id="instructorModal" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen px-4">
+      <div class="fixed inset-0 bg-maroon-950/70 backdrop-blur-sm" onclick="closeInstructorModal()"></div>
+      
+      <div class="relative bg-white rounded-3xl p-6 max-w-lg w-full border border-cream-300 shadow-2xl z-10">
+        <div class="flex items-center justify-between border-b border-cream-300 pb-3 mb-4">
+          <h3 class="text-lg font-bold text-maroon-900 font-serif-title flex items-center gap-2" id="instructorModalTitle">
+            <i data-lucide="award" class="w-5 h-5 text-maroon-800"></i> Add Chef Instructor
+          </h3>
+          <button onclick="closeInstructorModal()" class="text-charcoal-800 hover:text-maroon-900">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <form id="instructorForm" onsubmit="handleInstructorSubmit(event)" class="space-y-4">
+          <input type="hidden" id="instructorFormId" value="">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-maroon-900 uppercase mb-1">Full Name *</label>
+              <input type="text" id="instructorFormName" required placeholder="e.g. Chef Anthony Rossi, CEC" class="w-full bg-cream-100 border border-cream-300 rounded-xl p-2.5 text-xs text-charcoal-900 font-medium">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-maroon-900 uppercase mb-1">Title / Credentials *</label>
+              <input type="text" id="instructorFormTitle" required placeholder="e.g. Lead Executive Instructor" class="w-full bg-cream-100 border border-cream-300 rounded-xl p-2.5 text-xs text-charcoal-900 font-medium">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-maroon-900 uppercase mb-1">Years Experience *</label>
+              <input type="number" id="instructorFormExp" required placeholder="18" class="w-full bg-cream-100 border border-cream-300 rounded-xl p-2.5 text-xs text-charcoal-900 font-medium">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-maroon-900 uppercase mb-1">Specialty *</label>
+              <input type="text" id="instructorFormSpecialty" required placeholder="e.g. Classical French & Knife Skills" class="w-full bg-cream-100 border border-cream-300 rounded-xl p-2.5 text-xs text-charcoal-900 font-medium">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-maroon-900 uppercase mb-1">Photo URL</label>
+            <input type="url" id="instructorFormImage" placeholder="https://images.unsplash.com/..." class="w-full bg-cream-100 border border-cream-300 rounded-xl p-2.5 text-xs text-charcoal-900 font-mono">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-maroon-900 uppercase mb-1">Bio & Experience *</label>
+            <textarea id="instructorFormBio" rows="2" required placeholder="Brief biography and background..." class="w-full bg-cream-100 border border-cream-300 rounded-xl p-2.5 text-xs text-charcoal-900 font-medium"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-maroon-900 uppercase mb-1">Teaching Philosophy *</label>
+            <textarea id="instructorFormPhilosophy" rows="2" required placeholder="Quote or teaching approach..." class="w-full bg-cream-100 border border-cream-300 rounded-xl p-2.5 text-xs text-charcoal-900 font-medium"></textarea>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-2 border-t border-cream-300">
+            <button type="button" onclick="closeInstructorModal()" class="px-4 py-2 bg-cream-200 text-charcoal-800 font-bold rounded-xl text-xs">
+              Cancel
+            </button>
+            <button type="submit" class="px-4 py-2 bg-maroon-800 text-white font-bold rounded-xl text-xs shadow-md">
+              Save Profile
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT ANNOUNCEMENT MODAL -->
+  <div id="announcementModal" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen px-4">
+      <div class="fixed inset-0 bg-maroon-950/70 backdrop-blur-sm" onclick="toggleAnnouncementModal()"></div>
+      <div class="relative bg-white rounded-3xl p-6 max-w-md w-full border border-cream-300 shadow-2xl z-10">
+        <h3 class="text-lg font-bold text-maroon-900 mb-2 font-serif-title flex items-center gap-2">
+          <i data-lucide="megaphone" class="w-5 h-5 text-maroon-800"></i> Update Daily Announcement
+        </h3>
+        <p class="text-xs text-charcoal-800/80 mb-4">This message displays in the top banner across all views in The Culinary Room.</p>
+        
+        <textarea id="announcementInput" rows="3" class="w-full bg-cream-100 border border-cream-300 rounded-xl p-3 text-sm text-charcoal-900 focus:outline-none focus:border-maroon-800 mb-4 font-medium" placeholder="Enter announcement text..."></textarea>
+        
+        <div class="flex justify-end gap-2">
+          <button onclick="toggleAnnouncementModal()" class="px-4 py-2 bg-cream-200 text-charcoal-800 font-bold rounded-xl text-xs">
+            Cancel
+          </button>
+          <button onclick="saveAnnouncement()" class="px-4 py-2 bg-maroon-800 text-white font-bold rounded-xl text-xs shadow-md">
+            Save Banner
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM CONFIRMATION MODAL -->
+  <div id="confirmModal" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen px-4">
+      <div class="fixed inset-0 bg-maroon-950/70 backdrop-blur-sm"></div>
+      <div class="relative bg-white rounded-3xl p-6 max-w-sm w-full border border-cream-300 z-10 text-center shadow-2xl">
+        <div class="w-12 h-12 bg-cream-200 text-maroon-800 rounded-full flex items-center justify-center mx-auto mb-3 border border-cream-300">
+          <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-base font-bold text-maroon-900 mb-1" id="confirmTitle">Confirm Action</h3>
+        <p class="text-xs text-charcoal-800/80 mb-6 font-medium" id="confirmMessage">Are you sure you want to proceed?</p>
+        <div class="flex justify-center gap-3">
+          <button id="confirmCancelBtn" class="px-4 py-2 bg-cream-200 hover:bg-cream-300 text-charcoal-800 font-bold rounded-xl text-xs">
+            Cancel
+          </button>
+          <button id="confirmOkBtn" class="px-4 py-2 bg-maroon-800 hover:bg-maroon-700 text-white font-bold rounded-xl text-xs shadow-md">
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATIONS CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+
+  <!-- APPLICATION JAVASCRIPT LOGIC -->
+  <script>
+    // PRE-POPULATED DEFAULT DATA
+    const DEFAULT_JUNIOR_CHEFS = 24;
+
+    const DEFAULT_INSTRUCTORS = [
+      {
+        id: "inst-1",
+        name: "Chef Anthony Rossi, CEC",
+        title: "Executive Chef Instructor",
+        yearsExp: 18,
+        specialty: "Classical French & Modern American",
+        bio: "Former Executive Chef with 18+ years of industry experience. Passionate about knife skills mastery, farm-to-table sustainability, and mentoring Junior Chefs.",
+        philosophy: "“Respect every ingredient, master the classical technique, and cook with pride.”",
+        image: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        id: "inst-2",
+        name: "Chef Elena Vance, CBM",
+        title: "Master Pastry & Bakery Instructor",
+        yearsExp: 14,
+        specialty: "Artisan Viennoiserie & Plated Desserts",
+        bio: "Specializing in pastry arts, chocolate artisanry, and baking chemistry. Elena guides Junior Chefs in crafting bakery-quality tarts, breads, and confectioneries.",
+        philosophy: "“Baking is exact chemistry, but decorating is pure culinary art.”",
+        image: "https://images.unsplash.com/photo-1583394293214-28ded15ee548?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        id: "inst-3",
+        name: "Chef Marcus Thorne",
+        title: "Savory Arts & Kitchen Operations",
+        yearsExp: 11,
+        specialty: "Global Gastronomy & High-Volume Line Cooking",
+        bio: "Focuses on commercial kitchen prep, food safety standards (ServSafe), and speed-scratch line production in The Culinary Room.",
+        philosophy: "“Mise en place isn't just kitchen setup—it's a mindset for lifelong excellence.”",
+        image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80"
+      }
+    ];
+
+    const DEFAULT_DISHES = [
+      {
+        id: "dish-1",
+        title: "Truffle Parmesan Hand-Cut Fries",
+        category: "starters",
+        price: 5.50,
+        description: "Fresh Idaho potatoes double-fried by Junior Chefs, tossed in white truffle oil, grated parmesan, and fresh rosemary.",
+        image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80",
+        chefNote: "Knife Skills Class • Uniform Batonnet Cut",
+        dietary: ["Vegetarian", "Gluten-Free"],
+        isAvailable: true,
+        isDailyDish: true,
+        likes: 32
+      },
+      {
+        id: "dish-2",
+        title: "Culinary Room Caprese Skewers",
+        category: "starters",
+        price: 6.25,
+        description: "Sweet cherry tomatoes, fresh basil grown in the WACTC greenhouse, and fresh mozzarella finished with balsamic reduction.",
+        image: "https://images.unsplash.com/photo-1592417817098-8f3d6eb231fc?auto=format&fit=crop&w=600&q=80",
+        chefNote: "Greenhouse Farm-to-Table Collaboration",
+        dietary: ["Vegetarian", "Gluten-Free", "Nut-Free"],
+        isAvailable: true,
+        isDailyDish: false,
+        likes: 21
+      },
+      {
+        id: "dish-3",
+        title: "Smoked Gouda & Herb Mac Cheese",
+        category: "starters",
+        price: 6.75,
+        description: "Elbow cavatappi folded into a rich three-cheese mornay sauce, baked with garlic panko herb crust.",
+        image: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=600&q=80",
+        chefNote: "Junior Chefs Sauce Module",
+        dietary: ["Vegetarian"],
+        isAvailable: true,
+        isDailyDish: true,
+        likes: 45
+      },
+      {
+        id: "dish-4",
+        title: "WACTC Artisan Tiger Burger",
+        category: "entrees",
+        price: 9.75,
+        description: "Custom ground beef patty, sharp cheddar, caramelized onions, crisp lettuce, and signature sauce on house brioche.",
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80",
+        chefNote: "Culinary II Line Cooking Team",
+        dietary: ["Nut-Free"],
+        isAvailable: true,
+        isDailyDish: true,
+        likes: 68
+      },
+      {
+        id: "dish-5",
+        title: "Pan-Seared Garlic Herb Salmon",
+        category: "entrees",
+        price: 11.50,
+        description: "Pan-seared salmon fillet in lemon garlic butter, served over citrus quinoa and roasted asparagus.",
+        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80",
+        chefNote: "Seafood Butchery & Sauté Technique",
+        dietary: ["Gluten-Free", "Nut-Free"],
+        isAvailable: true,
+        isDailyDish: true,
+        likes: 54
+      },
+      {
+        id: "dish-6",
+        title: "Handmade Wild Mushroom Pasta",
+        category: "entrees",
+        price: 9.25,
+        description: "Hand-rolled tagliatelle pasta, sautéed wild mushrooms, fresh thyme, parmesan, and light garlic cream sauce.",
+        image: "https://images.unsplash.com/photo-1621996346565-e3d5d6281288?auto=format&fit=crop&w=600&q=80",
+        chefNote: "Fresh Pasta Lab Creation",
+        dietary: ["Vegetarian"],
+        isAvailable: true,
+        isDailyDish: false,
+        likes: 38
+      },
+      {
+        id: "dish-7",
+        title: "Garden Avocado Harvest Bowl",
+        category: "entrees",
+        price: 8.50,
+        description: "Warm farro grains, sliced avocado, roasted sweet potato, edamame, and house lemon tahini dressing.",
+        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
+        chefNote: "Plant-Based Nutrition Workshop",
+        dietary: ["Vegan", "Vegetarian", "Nut-Free"],
+        isAvailable: true,
+        isDailyDish: false,
+        likes: 29
+      },
+      {
+        id: "dish-8",
+        title: "Salted Caramel Dark Chocolate Tart",
+        category: "desserts",
+        price: 4.75,
+        description: "Buttery sable crust crumble, rich dark chocolate ganache, house salted caramel, and vanilla chantilly.",
+        image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80",
+        chefNote: "Pastry Arts Junior Chef Team",
+        dietary: ["Vegetarian"],
+        isAvailable: true,
+        isDailyDish: true,
+        likes: 72
+      },
+      {
+        id: "dish-9",
+        title: "Sparkling Hibiscus Citrus Iced Tea",
+        category: "beverages",
+        price: 3.00,
+        description: "Brewed organic hibiscus flower tea infused with lime, orange peel, and sparkling mineral water.",
+        image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80",
+        chefNote: "Beverage Crafting Lab",
+        dietary: ["Vegan", "Vegetarian", "Gluten-Free", "Nut-Free"],
+        isAvailable: true,
+        isDailyDish: false,
+        likes: 25
+      }
+    ];
+
+    const PRESET_IMAGES = {
+      burger: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80",
+      salmon: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80",
+      pasta: "https://images.unsplash.com/photo-1621996346565-e3d5d6281288?auto=format&fit=crop&w=600&q=80",
+      salad: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
+      steak: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80",
+      dessert: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80",
+      drink: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"
+    };
+
+    const CATEGORIES = [
+      { id: 'all', label: 'Full Menu', icon: 'utensils' },
+      { id: 'daily-specials', label: '⭐ Daily Specials', icon: 'sparkles' },
+      { id: 'starters', label: 'Appetizers', icon: 'soup' },
+      { id: 'entrees', label: 'Main Entrees', icon: 'beef' },
+      { id: 'desserts', label: 'Desserts', icon: 'pie-chart' },
+      { id: 'beverages', label: 'Beverages', icon: 'cup-soda' },
+    ];
+
+    // APPLICATION STATE
+    let state = {
+      activeTab: 'menu', // 'menu' | 'instructors'
+      juniorChefCount: DEFAULT_JUNIOR_CHEFS,
+      dishes: [],
+      instructors: [],
+      currentCategory: 'all',
+      searchQuery: '',
+      dietaryFilter: 'ALL',
+      hideSoldOut: false,
+      isAdmin: false,
+      cart: [],
+      announcement: "Today in The Culinary Room: Fresh hand-cut pasta & greenhouse Caprese prepared by our Junior Chefs!",
+      userLikedDishes: new Set()
+    };
+
+    // LOCAL STORAGE KEYS
+    const KEY_DISHES = 'WACTC_DISHES_V4';
+    const KEY_INSTRUCTORS = 'WACTC_INSTRUCTORS_V4';
+    const KEY_CHEFS_COUNT = 'WACTC_JUNIOR_CHEFS_COUNT_V4';
+    const KEY_ANNOUNCEMENT = 'WACTC_ANNOUNCEMENT_V4';
+    const KEY_LIKES = 'WACTC_LIKES_V4';
+
+    // INIT APPLICATION
+    window.onload = function() {
+      loadState();
+      renderCategories();
+      renderAllViews();
+      updateCartUI();
+      document.getElementById('yearSpan').textContent = new Date().getFullYear();
+      lucide.createIcons();
+    };
+
+    function loadState() {
+      // Dishes
+      const savedDishes = localStorage.getItem(KEY_DISHES);
+      if (savedDishes) {
+        try { state.dishes = JSON.parse(savedDishes); } catch (e) { state.dishes = [...DEFAULT_DISHES]; }
+      } else {
+        state.dishes = [...DEFAULT_DISHES];
+        saveDishesToStorage();
+      }
+
+      // Instructors
+      const savedInstructors = localStorage.getItem(KEY_INSTRUCTORS);
+      if (savedInstructors) {
+        try { state.instructors = JSON.parse(savedInstructors); } catch (e) { state.instructors = [...DEFAULT_INSTRUCTORS]; }
+      } else {
+        state.instructors = [...DEFAULT_INSTRUCTORS];
+        saveInstructorsToStorage();
+      }
+
+      // Junior Chef Count
+      const savedChefCount = localStorage.getItem(KEY_CHEFS_COUNT);
+      state.juniorChefCount = savedChefCount ? parseInt(savedChefCount) : DEFAULT_JUNIOR_CHEFS;
+      document.getElementById('adminChefCountInput').value = state.juniorChefCount;
+
+      // Announcement Banner
+      const savedAnnounce = localStorage.getItem(KEY_ANNOUNCEMENT);
+      if (savedAnnounce) state.announcement = savedAnnounce;
+      document.getElementById('bannerText').textContent = state.announcement;
+
+      // Likes
+      const savedLikes = localStorage.getItem(KEY_LIKES);
+      if (savedLikes) {
+        try { state.userLikedDishes = new Set(JSON.parse(savedLikes)); } catch (e) {}
+      }
+
+      updateJuniorChefCountDisplays();
+    }
+
+    function saveDishesToStorage() { localStorage.setItem(KEY_DISHES, JSON.stringify(state.dishes)); }
+    function saveInstructorsToStorage() { localStorage.setItem(KEY_INSTRUCTORS, JSON.stringify(state.instructors)); }
+
+    // TAB NAVIGATION SWITCHING
+    function switchTab(tabName) {
+      state.activeTab = tabName;
+
+      document.getElementById('view-menu').classList.add('hidden');
+      document.getElementById('view-instructors').classList.add('hidden');
+
+      document.getElementById(`view-${tabName}`).classList.remove('hidden');
+
+      // Update Nav Buttons Styling
+      ['menu', 'instructors'].forEach(t => {
+        const desktopBtn = document.getElementById(`nav-tab-${t}`);
+        const mobileBtn = document.getElementById(`mob-tab-${t}`);
+
+        if (t === tabName) {
+          if (desktopBtn) {
+            desktopBtn.classList.add('bg-maroon-800', 'text-white', 'shadow-sm');
+            desktopBtn.classList.remove('text-charcoal-900');
+          }
+          if (mobileBtn) {
+            mobileBtn.classList.add('text-maroon-800', 'font-bold');
+            mobileBtn.classList.remove('text-charcoal-800');
+          }
+        } else {
+          if (desktopBtn) {
+            desktopBtn.classList.remove('bg-maroon-800', 'text-white', 'shadow-sm');
+            desktopBtn.classList.add('text-charcoal-900');
+          }
+          if (mobileBtn) {
+            mobileBtn.classList.remove('text-maroon-800', 'font-bold');
+            mobileBtn.classList.add('text-charcoal-800');
+          }
+        }
+      });
+
+      renderAllViews();
+    }
+
+    // UPDATE JUNIOR CHEF COUNT
+    function updateJuniorChefCount(val) {
+      const count = parseInt(val) || 1;
+      state.juniorChefCount = count;
+      localStorage.setItem(KEY_CHEFS_COUNT, count);
+      updateJuniorChefCountDisplays();
+      showToast(`Updated to ${count} Junior Chefs!`);
+    }
+
+    function updateJuniorChefCountDisplays() {
+      const txt = `${state.juniorChefCount} Junior Chefs`;
+      document.getElementById('statJuniorChefsCount').textContent = txt;
+      document.getElementById('footerChefCount').textContent = state.juniorChefCount;
+    }
+
+    // RENDER CATEGORY PILLS
+    function renderCategories() {
+      const container = document.getElementById('categoryContainer');
+      container.innerHTML = CATEGORIES.map(cat => {
+        const isActive = state.currentCategory === cat.id;
+        const activeClasses = isActive 
+          ? 'bg-maroon-800 text-white font-bold shadow-md' 
+          : 'bg-white text-charcoal-900 hover:bg-cream-200 border border-cream-300 font-semibold';
+
+        return `
+          <button 
+            onclick="filterCategory('${cat.id}')"
+            class="px-4 py-2 rounded-xl text-xs flex items-center gap-2 transition-all shrink-0 ${activeClasses}"
+          >
+            <i data-lucide="${cat.icon}" class="w-4 h-4"></i>
+            <span>${cat.label}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function filterDailySpecialsOnly() {
+      switchTab('menu');
+      filterCategory('daily-specials');
+    }
+
+    // MAIN VIEW RENDERER
+    function renderAllViews() {
+      renderDailyDishesSpotlight();
+      renderFullMenu();
+      renderInstructorsView();
+      
+      // Update Featured Hero Card
+      const currentFeatured = state.dishes.find(d => d.isDailyDish && d.isAvailable) || state.dishes[0];
+      if (currentFeatured) {
+        document.getElementById('heroFeaturedTitle').textContent = currentFeatured.title;
+        document.getElementById('heroFeaturedPrice').textContent = `$${currentFeatured.price.toFixed(2)}`;
+        document.getElementById('heroFeaturedImg').src = currentFeatured.image;
+      }
+
+      lucide.createIcons();
+    }
+
+    // RENDER DAILY DISHES SPOTLIGHT
+    function renderDailyDishesSpotlight() {
+      const highlightGrid = document.getElementById('dailyDishesHighlightGrid');
+      const dailyDishes = state.dishes.filter(d => d.isDailyDish);
+
+      if (dailyDishes.length === 0) {
+        highlightGrid.innerHTML = `
+          <div class="col-span-full text-center py-8 bg-cream-100 rounded-2xl border border-cream-300">
+            <p class="text-charcoal-800 font-bold text-sm">No daily specials featured right now.</p>
+            <p class="text-xs text-charcoal-800/60 mt-1">Check back soon or explore the full menu!</p>
+          </div>
+        `;
+        return;
+      }
+
+      highlightGrid.innerHTML = dailyDishes.slice(0, 3).map(dish => createDishCardHTML(dish, true)).join('');
+    }
+
+    // TAB 1: RENDER FULL MENU
+    function renderFullMenu() {
+      const grid = document.getElementById('dishesGrid');
+      const emptyState = document.getElementById('emptyState');
+
+      let filtered = state.dishes.filter(dish => {
+        if (state.currentCategory === 'daily-specials' && !dish.isDailyDish) return false;
+        if (state.currentCategory !== 'all' && state.currentCategory !== 'daily-specials' && dish.category !== state.currentCategory) return false;
+
+        if (state.searchQuery.trim() !== '') {
+          const q = state.searchQuery.toLowerCase();
+          const m1 = dish.title.toLowerCase().includes(q);
+          const m2 = dish.description.toLowerCase().includes(q);
+          const m3 = dish.dietary.some(t => t.toLowerCase().includes(q));
+          if (!m1 && !m2 && !m3) return false;
+        }
+
+        if (state.dietaryFilter !== 'ALL' && !dish.dietary.includes(state.dietaryFilter)) return false;
+        if (state.hideSoldOut && !dish.isAvailable) return false;
+
+        return true;
+      });
+
+      document.getElementById('resultsCount').textContent = `${filtered.length} items`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      } else {
+        emptyState.classList.add('hidden');
+      }
+
+      grid.innerHTML = filtered.map(dish => createDishCardHTML(dish)).join('');
+    }
+
+    // TAB 2: RENDER INSTRUCTORS PAGE
+    function renderInstructorsView() {
+      const grid = document.getElementById('instructorsGrid');
+
+      if (state.instructors.length === 0) {
+        grid.innerHTML = `<p class="col-span-full text-center text-charcoal-800 font-semibold">No instructors listed.</p>`;
+        return;
+      }
+
+      grid.innerHTML = state.instructors.map(inst => `
+        <div class="bg-white rounded-3xl overflow-hidden border border-cream-300 card-shadow card-shadow-hover flex flex-col justify-between group transition-all">
+          <div>
+            <div class="relative h-64 w-full bg-cream-200 overflow-hidden">
+              <img 
+                src="${inst.image}" 
+                alt="${inst.name}" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                onerror="this.src='https://placehold.co/600x600/6b0d1e/ffffff?text=Chef+Instructor'"
+              >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              
+              <span class="absolute bottom-3 left-3 bg-maroon-800 text-white font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-lg shadow-md font-mono">
+                ${inst.yearsExp}+ Years Exp
+              </span>
+            </div>
+
+            <div class="p-6 space-y-3">
+              <div>
+                <h3 class="text-xl font-bold text-maroon-900 font-serif-title">${inst.name}</h3>
+                <p class="text-xs font-bold text-maroon-700 uppercase tracking-wider mt-0.5">${inst.title}</p>
+              </div>
+
+              <div class="text-xs text-charcoal-800 leading-relaxed space-y-2">
+                <p class="font-medium">${inst.bio}</p>
+                <div class="p-3 rounded-xl bg-cream-100 border border-cream-300 italic text-maroon-900 text-xs font-serif-title">
+                  ${inst.philosophy}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0 border-t border-cream-200 mt-4">
+            <div class="flex items-center justify-between text-xs text-charcoal-800 pt-3">
+              <span class="font-bold text-maroon-900">Specialty:</span>
+              <span class="text-maroon-800 font-semibold">${inst.specialty}</span>
+            </div>
+
+            ${state.isAdmin ? `
+              <div class="flex items-center gap-2 mt-4 pt-3 border-t border-cream-200">
+                <button onclick="openEditInstructorModal('${inst.id}')" class="flex-1 py-2 bg-cream-200 hover:bg-cream-300 text-maroon-900 rounded-xl text-xs font-bold border border-cream-300">
+                  Edit Profile
+                </button>
+                <button onclick="confirmDeleteInstructor('${inst.id}')" class="p-2 bg-rose-100 hover:bg-rose-200 text-rose-800 rounded-xl border border-rose-200">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+            ` : ''}
+          </div>
+
+        </div>
+      `).join('');
+    }
+
+    // DISH CARD HTML GENERATOR
+    function createDishCardHTML(dish, isDailyHighlight = false) {
+      const isLiked = state.userLikedDishes.has(dish.id);
+      const cartItem = state.cart.find(item => item.dishId === dish.id);
+      const inCartQty = cartItem ? cartItem.quantity : 0;
+
+      const tagPills = dish.dietary.map(t => {
+        let c = "bg-cream-200 text-charcoal-900 border-cream-300";
+        if (t === 'Vegetarian' || t === 'Vegan') c = "bg-emerald-50 text-emerald-800 border-emerald-200";
+        if (t === 'Gluten-Free') c = "bg-amber-50 text-amber-900 border-amber-200";
+        if (t === 'Nut-Free') c = "bg-blue-50 text-blue-900 border-blue-200";
+        return `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md border ${c}">${t}</span>`;
+      }).join(' ');
+
+      return `
+        <div class="bg-white rounded-3xl overflow-hidden flex flex-col border border-cream-300 card-shadow card-shadow-hover transition-all duration-300 group ${!dish.isAvailable ? 'opacity-75 grayscale-[0.3]' : ''}">
+          
+          <div class="relative h-48 w-full overflow-hidden bg-cream-200">
+            <img 
+              src="${dish.image}" 
+              alt="${dish.title}" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onerror="this.src='https://placehold.co/600x400/6b0d1e/ffffff?text=The+Culinary+Room'"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+
+            <div class="absolute top-3 left-3 flex flex-col gap-1 items-start">
+              ${dish.isDailyDish ? `
+                <span class="bg-gold-500 text-maroon-950 font-black text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-lg shadow-md flex items-center gap-1">
+                  <i data-lucide="sparkles" class="w-3 h-3 fill-maroon-950"></i> Daily Special
+                </span>
+              ` : ''}
+              
+              ${!dish.isAvailable ? `
+                <span class="bg-rose-800 text-white font-extrabold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-lg shadow-md">
+                  Sold Out
+                </span>
+              ` : `
+                <span class="bg-emerald-700 text-white font-bold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-lg shadow-md">
+                  Available
+                </span>
+              `}
+            </div>
+
+            <button 
+              onclick="toggleLikeDish('${dish.id}')" 
+              class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 hover:bg-white text-maroon-800 backdrop-blur-md flex items-center justify-center shadow-md transition-all active:scale-90"
+              title="Love this dish!"
+            >
+              <i data-lucide="heart" class="w-4 h-4 ${isLiked ? 'text-maroon-800 fill-maroon-800' : 'text-maroon-800'}"></i>
+            </button>
+
+            <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur-md border border-cream-300 px-3 py-1 rounded-xl text-maroon-900 font-extrabold text-base font-mono shadow-md">
+              $${dish.price.toFixed(2)}
+            </div>
+          </div>
+
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                ${tagPills}
+              </div>
+
+              <h3 class="text-lg font-bold text-maroon-900 font-serif-title leading-snug group-hover:text-maroon-700 transition-colors">
+                ${dish.title}
+              </h3>
+
+              <p class="text-xs text-charcoal-800/80 line-clamp-2 leading-relaxed font-medium">
+                ${dish.description}
+              </p>
+
+              ${dish.chefNote ? `
+                <div class="text-[11px] text-maroon-800 font-semibold italic flex items-center gap-1.5 pt-1">
+                  <i data-lucide="award" class="w-3.5 h-3.5 text-maroon-800 shrink-0"></i>
+                  <span class="truncate">${dish.chefNote}</span>
+                </div>
+              ` : ''}
+            </div>
+
+            <div class="pt-3 border-t border-cream-200">
+              ${state.isAdmin ? `
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-1">
+                    <button 
+                      onclick="toggleDishDailyStatus('${dish.id}')" 
+                      class="px-2.5 py-1 rounded-lg text-xs font-bold ${dish.isDailyDish ? 'bg-gold-500 text-maroon-950' : 'bg-cream-200 text-charcoal-800 border border-cream-300'}"
+                    >
+                      ${dish.isDailyDish ? '⭐ Special' : 'Make Special'}
+                    </button>
+
+                    <button 
+                      onclick="toggleDishStock('${dish.id}')" 
+                      class="px-2.5 py-1 rounded-lg text-xs font-bold ${dish.isAvailable ? 'bg-rose-100 text-rose-800 border border-rose-200' : 'bg-emerald-100 text-emerald-800 border border-emerald-200'}"
+                    >
+                      ${dish.isAvailable ? 'Sold Out' : 'Available'}
+                    </button>
+                    
+                    <button onclick="openEditDishModal('${dish.id}')" class="p-1.5 bg-cream-200 text-maroon-900 rounded-lg border border-cream-300 hover:bg-cream-300">
+                      <i data-lucide="edit" class="w-3.5 h-3.5"></i>
+                    </button>
+
+                    <button onclick="confirmDeleteDish('${dish.id}')" class="p-1.5 bg-rose-100 text-rose-800 rounded-lg border border-rose-200 hover:bg-rose-200">
+                      <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    </button>
+                  </div>
+                </div>
+              ` : `
+                <div class="flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-1 text-xs text-charcoal-800">
+                    <i data-lucide="heart" class="w-3.5 h-3.5 text-maroon-800"></i>
+                    <span class="font-mono font-bold text-maroon-900">${dish.likes || 0}</span>
+                  </div>
+
+                  ${dish.isAvailable ? `
+                    <button 
+                      onclick="addToPlate('${dish.id}')" 
+                      class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${inCartQty > 0 ? 'bg-cream-200 text-maroon-900 border border-maroon-800/30' : 'bg-maroon-800 hover:bg-maroon-700 text-white shadow-md'}"
+                    >
+                      <i data-lucide="${inCartQty > 0 ? 'check' : 'plus'}" class="w-4 h-4 text-gold-400"></i>
+                      <span>${inCartQty > 0 ? `On Plate (${inCartQty})` : 'Add to Plate'}</span>
+                    </button>
+                  ` : `
+                    <span class="text-xs font-semibold text-charcoal-800/50 bg-cream-100 px-3 py-1.5 rounded-lg border border-cream-300">
+                      Sold Out
+                    </span>
+                  `}
+                </div>
+              `}
+            </div>
+
+          </div>
+        </div>
+      `;
+    }
+
+    // SEARCH & FILTER HANDLERS
+    function handleSearch(val) {
+      state.searchQuery = val;
+      document.getElementById('searchInput').value = val;
+      const btn = document.getElementById('clearSearchBtn');
+      if (val.length > 0) btn.classList.remove('hidden');
+      else btn.classList.add('hidden');
+
+      renderFullMenu();
+    }
+
+    function filterCategory(catId) {
+      state.currentCategory = catId;
+      renderCategories();
+      renderFullMenu();
+    }
+
+    function setDietaryFilter(tag) {
+      state.dietaryFilter = tag;
+      document.querySelectorAll('.dietary-btn').forEach(b => {
+        b.classList.remove('bg-maroon-800', 'border-maroon-800', 'text-white');
+        b.classList.add('border-cream-300', 'bg-white', 'text-charcoal-800');
+      });
+      const activeBtn = document.getElementById(`tag-${tag}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('border-cream-300', 'bg-white', 'text-charcoal-800');
+        activeBtn.classList.add('bg-maroon-800', 'border-maroon-800', 'text-white');
+      }
+      renderFullMenu();
+    }
+
+    function toggleAvailableOnly(checked) {
+      state.hideSoldOut = checked;
+      renderFullMenu();
+    }
+
+    function resetFilters() {
+      state.currentCategory = 'all';
+      state.searchQuery = '';
+      state.dietaryFilter = 'ALL';
+      state.hideSoldOut = false;
+      document.getElementById('availableOnlyToggle').checked = false;
+      document.getElementById('searchInput').value = '';
+      setDietaryFilter('ALL');
+      renderCategories();
+      renderFullMenu();
+      showToast('Filters reset');
+    }
+
+    // LIKE DISH TOGGLE
+    function toggleLikeDish(dishId) {
+      const dish = state.dishes.find(d => d.id === dishId);
+      if (!dish) return;
+
+      if (state.userLikedDishes.has(dishId)) {
+        state.userLikedDishes.delete(dishId);
+        dish.likes = Math.max(0, (dish.likes || 1) - 1);
+      } else {
+        state.userLikedDishes.add(dishId);
+        dish.likes = (dish.likes || 0) + 1;
+        showToast(`❤️ Liked ${dish.title}!`);
+      }
+
+      localStorage.setItem(KEY_LIKES, JSON.stringify(Array.from(state.userLikedDishes)));
+      saveDishesToStorage();
+      renderAllViews();
+    }
+
+    // CART / PLATE TRAY MANAGEMENT
+    function addToPlate(dishId) {
+      const dish = state.dishes.find(d => d.id === dishId);
+      if (!dish || !dish.isAvailable) return;
+
+      const existing = state.cart.find(item => item.dishId === dishId);
+      if (existing) existing.quantity += 1;
+      else state.cart.push({ dishId, quantity: 1 });
+
+      updateCartUI();
+      renderAllViews();
+      showToast(`Added ${dish.title} to Plate`);
+    }
+
+    function updateCartQuantity(dishId, delta) {
+      const idx = state.cart.findIndex(item => item.dishId === dishId);
+      if (idx === -1) return;
+
+      state.cart[idx].quantity += delta;
+      if (state.cart[idx].quantity <= 0) state.cart.splice(idx, 1);
+
+      updateCartUI();
+      renderAllViews();
+    }
+
+    function clearCart() {
+      state.cart = [];
+      updateCartUI();
+      renderAllViews();
+      showToast('Plate cleared');
+    }
+
+    function updateCartUI() {
+      const totalCount = state.cart.reduce((s, i) => s + i.quantity, 0);
+      document.getElementById('cartBadge').textContent = totalCount;
+
+      const container = document.getElementById('cartItemsList');
+      if (state.cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-charcoal-800/60">
+            <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto mb-3 opacity-30 text-maroon-800"></i>
+            <p class="text-sm font-bold text-maroon-900">Your Plate is Empty</p>
+            <p class="text-xs mt-1">Select creations from The Culinary Room to add here.</p>
+          </div>
+        `;
+        document.getElementById('cartSubtotal').textContent = '$0.00';
+        document.getElementById('cartTotal').textContent = '$0.00';
+        lucide.createIcons();
+        return;
+      }
+
+      let subtotal = 0;
+      container.innerHTML = state.cart.map(item => {
+        const dish = state.dishes.find(d => d.id === item.dishId);
+        if (!dish) return '';
+        const line = dish.price * item.quantity;
+        subtotal += line;
+
+        return `
+          <div class="flex items-center gap-3 bg-cream-100 p-3 rounded-2xl border border-cream-300">
+            <img src="${dish.image}" alt="${dish.title}" class="w-14 h-14 rounded-xl object-cover">
+            <div class="flex-1 min-w-0">
+              <h4 class="text-xs font-bold text-maroon-900 truncate">${dish.title}</h4>
+              <p class="text-xs font-mono text-maroon-800 font-extrabold mt-0.5">$${dish.price.toFixed(2)}</p>
+            </div>
+            <div class="flex items-center gap-2 bg-white border border-cream-300 rounded-xl p-1 shadow-sm">
+              <button onclick="updateCartQuantity('${dish.id}', -1)" class="w-6 h-6 rounded bg-cream-200 text-maroon-900 font-bold flex items-center justify-center text-xs hover:bg-cream-300">
+                -
+              </button>
+              <span class="font-mono text-xs font-bold text-maroon-900 w-4 text-center">${item.quantity}</span>
+              <button onclick="updateCartQuantity('${dish.id}', 1)" class="w-6 h-6 rounded bg-cream-200 text-maroon-900 font-bold flex items-center justify-center text-xs hover:bg-cream-300">
+                +
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('cartSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('cartTotal').textContent = `$${subtotal.toFixed(2)}`;
+      lucide.createIcons();
+    }
+
+    function toggleCartDrawer() {
+      document.getElementById('cartDrawer').classList.toggle('hidden');
+    }
+
+    function submitSimulatedOrder() {
+      if (state.cart.length === 0) {
+        showToast('Plate is empty!');
+        return;
+      }
+      const total = state.cart.reduce((s, i) => {
+        const d = state.dishes.find(item => item.id === i.dishId);
+        return s + (d ? d.price * i.quantity : 0);
+      }, 0);
+
+      showToast(`🎉 Plate order summary ready! Total: $${total.toFixed(2)}`);
+      toggleCartDrawer();
+      state.cart = [];
+      updateCartUI();
+      renderAllViews();
+    }
+
+    // ADMIN MODE TOGGLE
+    function toggleAdminMode() {
+      state.isAdmin = !state.isAdmin;
+      const btn = document.getElementById('modeToggleBtn');
+      const text = document.getElementById('modeText');
+      const panel = document.getElementById('adminControlPanel');
+      const editBanner = document.getElementById('editBannerBtn');
+
+      if (state.isAdmin) {
+        text.textContent = "Instructor View";
+        btn.classList.remove('bg-cream-200', 'text-maroon-900');
+        btn.classList.add('bg-maroon-800', 'text-white', 'font-bold');
+        panel.classList.remove('hidden');
+        editBanner.classList.remove('hidden');
+        showToast('🔓 Switched to Instructor Admin Portal');
+      } else {
+        text.textContent = "Customer View";
+        btn.classList.remove('bg-maroon-800', 'text-white', 'font-bold');
+        btn.classList.add('bg-cream-200', 'text-maroon-900');
+        panel.classList.add('hidden');
+        editBanner.classList.add('hidden');
+        showToast('🔒 Switched to Customer View');
+      }
+
+      renderAllViews();
+    }
+
+    function toggleDishDailyStatus(dishId) {
+      const dish = state.dishes.find(d => d.id === dishId);
+      if (!dish) return;
+      dish.isDailyDish = !dish.isDailyDish;
+      saveDishesToStorage();
+      renderAllViews();
+      showToast(`${dish.title} is ${dish.isDailyDish ? 'marked as Daily Special!' : 'removed from Daily Specials'}`);
+    }
+
+    function toggleDishStock(dishId) {
+      const dish = state.dishes.find(d => d.id === dishId);
+      if (!dish) return;
+      dish.isAvailable = !dish.isAvailable;
+      saveDishesToStorage();
+      renderAllViews();
+      showToast(`${dish.title} status changed to ${dish.isAvailable ? 'Available' : 'Sold Out'}`);
+    }
+
+    // DISH MODAL LOGIC
+    function openAddDishModal() {
+      document.getElementById('dishModalTitle').textContent = "Add New Junior Chef Creation";
+      document.getElementById('dishFormId').value = "";
+      document.getElementById('dishForm').reset();
+      document.getElementById('dishFormAvailable').checked = true;
+      document.getElementById('dishModal').classList.remove('hidden');
+    }
+
+    function openEditDishModal(dishId) {
+      const dish = state.dishes.find(d => d.id === dishId);
+      if (!dish) return;
+
+      document.getElementById('dishModalTitle').textContent = "Edit Junior Chef Creation";
+      document.getElementById('dishFormId').value = dish.id;
+      document.getElementById('dishFormTitle').value = dish.title;
+      document.getElementById('dishFormCategory').value = dish.category;
+      document.getElementById('dishFormPrice').value = dish.price;
+      document.getElementById('dishFormDesc').value = dish.description;
+      document.getElementById('dishFormImage').value = dish.image;
+      document.getElementById('dishFormChefNote').value = dish.chefNote || '';
+
+      document.getElementById('tagVegetarian').checked = dish.dietary.includes('Vegetarian');
+      document.getElementById('tagVegan').checked = dish.dietary.includes('Vegan');
+      document.getElementById('tagGlutenFree').checked = dish.dietary.includes('Gluten-Free');
+      document.getElementById('tagNutFree').checked = dish.dietary.includes('Nut-Free');
+
+      document.getElementById('dishFormAvailable').checked = dish.isAvailable;
+      document.getElementById('dishFormDaily').checked = !!dish.isDailyDish;
+
+      document.getElementById('dishModal').classList.remove('hidden');
+    }
+
+    function closeDishModal() { document.getElementById('dishModal').classList.add('hidden'); }
+
+    function setPresetImage(key) {
+      if (PRESET_IMAGES[key]) {
+        document.getElementById('dishFormImage').value = PRESET_IMAGES[key];
+        showToast(`Selected ${key} image preset`);
+      }
+    }
+
+    function handleDishSubmit(e) {
+      e.preventDefault();
+
+      const id = document.getElementById('dishFormId').value;
+      const title = document.getElementById('dishFormTitle').value.trim();
+      const category = document.getElementById('dishFormCategory').value;
+      const price = parseFloat(document.getElementById('dishFormPrice').value);
+      const description = document.getElementById('dishFormDesc').value.trim();
+      let image = document.getElementById('dishFormImage').value.trim();
+      const chefNote = document.getElementById('dishFormChefNote').value.trim();
+
+      if (!image) image = PRESET_IMAGES[category] || PRESET_IMAGES.burger;
+
+      const dietary = [];
+      if (document.getElementById('tagVegetarian').checked) dietary.push('Vegetarian');
+      if (document.getElementById('tagVegan').checked) dietary.push('Vegan');
+      if (document.getElementById('tagGlutenFree').checked) dietary.push('Gluten-Free');
+      if (document.getElementById('tagNutFree').checked) dietary.push('Nut-Free');
+
+      const isAvailable = document.getElementById('dishFormAvailable').checked;
+      const isDailyDish = document.getElementById('dishFormDaily').checked;
+
+      if (id) {
+        const idx = state.dishes.findIndex(d => d.id === id);
+        if (idx !== -1) {
+          state.dishes[idx] = { ...state.dishes[idx], title, category, price, description, image, chefNote, dietary, isAvailable, isDailyDish };
+          showToast(`Updated ${title}`);
+        }
+      } else {
+        const newDish = { id: 'dish-' + Date.now(), title, category, price, description, image, chefNote, dietary, isAvailable, isDailyDish, likes: 0 };
+        state.dishes.unshift(newDish);
+        showToast(`Added ${title}`);
+      }
+
+      saveDishesToStorage();
+      closeDishModal();
+      renderAllViews();
+    }
+
+    function confirmDeleteDish(dishId) {
+      const dish = state.dishes.find(d => d.id === dishId);
+      if (!dish) return;
+
+      openConfirmModal(
+        'Delete Dish',
+        `Are you sure you want to delete "${dish.title}"?`,
+        () => {
+          state.dishes = state.dishes.filter(d => d.id !== dishId);
+          state.cart = state.cart.filter(item => item.dishId !== dishId);
+          saveDishesToStorage();
+          updateCartUI();
+          renderAllViews();
+          showToast(`Deleted ${dish.title}`);
+        }
+      );
+    }
+
+    // INSTRUCTOR MODAL LOGIC
+    function openAddInstructorModal() {
+      document.getElementById('instructorModalTitle').textContent = "Add Chef Instructor";
+      document.getElementById('instructorFormId').value = "";
+      document.getElementById('instructorForm').reset();
+      document.getElementById('instructorModal').classList.remove('hidden');
+    }
+
+    function openEditInstructorModal(instId) {
+      const inst = state.instructors.find(i => i.id === instId);
+      if (!inst) return;
+
+      document.getElementById('instructorModalTitle').textContent = "Edit Chef Instructor Profile";
+      document.getElementById('instructorFormId').value = inst.id;
+      document.getElementById('instructorFormName').value = inst.name;
+      document.getElementById('instructorFormTitle').value = inst.title;
+      document.getElementById('instructorFormExp').value = inst.yearsExp;
+      document.getElementById('instructorFormSpecialty').value = inst.specialty;
+      document.getElementById('instructorFormImage').value = inst.image;
+      document.getElementById('instructorFormBio').value = inst.bio;
+      document.getElementById('instructorFormPhilosophy').value = inst.philosophy;
+
+      document.getElementById('instructorModal').classList.remove('hidden');
+    }
+
+    function closeInstructorModal() { document.getElementById('instructorModal').classList.add('hidden'); }
+
+    function handleInstructorSubmit(e) {
+      e.preventDefault();
+
+      const id = document.getElementById('instructorFormId').value;
+      const name = document.getElementById('instructorFormName').value.trim();
+      const title = document.getElementById('instructorFormTitle').value.trim();
+      const yearsExp = parseInt(document.getElementById('instructorFormExp').value);
+      const specialty = document.getElementById('instructorFormSpecialty').value.trim();
+      let image = document.getElementById('instructorFormImage').value.trim();
+      const bio = document.getElementById('instructorFormBio').value.trim();
+      const philosophy = document.getElementById('instructorFormPhilosophy').value.trim();
+
+      if (!image) image = "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80";
+
+      if (id) {
+        const idx = state.instructors.findIndex(i => i.id === id);
+        if (idx !== -1) {
+          state.instructors[idx] = { id, name, title, yearsExp, specialty, image, bio, philosophy };
+          showToast(`Updated ${name}`);
+        }
+      } else {
+        const newInst = { id: 'inst-' + Date.now(), name, title, yearsExp, specialty, image, bio, philosophy };
+        state.instructors.push(newInst);
+        showToast(`Added instructor ${name}`);
+      }
+
+      saveInstructorsToStorage();
+      closeInstructorModal();
+      renderAllViews();
+    }
+
+    function confirmDeleteInstructor(instId) {
+      const inst = state.instructors.find(i => i.id === instId);
+      if (!inst) return;
+
+      openConfirmModal(
+        'Delete Instructor',
+        `Are you sure you want to remove ${inst.name}?`,
+        () => {
+          state.instructors = state.instructors.filter(i => i.id !== instId);
+          saveInstructorsToStorage();
+          renderAllViews();
+          showToast(`Removed instructor profile`);
+        }
+      );
+    }
+
+    // ANNOUNCEMENT MODAL LOGIC
+    function toggleAnnouncementModal() {
+      const modal = document.getElementById('announcementModal');
+      document.getElementById('announcementInput').value = state.announcement;
+      modal.classList.toggle('hidden');
+    }
+
+    function saveAnnouncement() {
+      const val = document.getElementById('announcementInput').value.trim();
+      if (val) {
+        state.announcement = val;
+        localStorage.setItem(KEY_ANNOUNCEMENT, val);
+        document.getElementById('bannerText').textContent = val;
+        showToast('Updated Daily Announcement');
+      }
+      toggleAnnouncementModal();
+    }
+
+    // RESET ALL DATA TO DEFAULT
+    function confirmResetAll() {
+      openConfirmModal(
+        'Reset All School Data',
+        'This will reset dishes, instructors, and Junior Chef count back to original defaults. Continue?',
+        () => {
+          state.dishes = [...DEFAULT_DISHES];
+          state.instructors = [...DEFAULT_INSTRUCTORS];
+          state.juniorChefCount = DEFAULT_JUNIOR_CHEFS;
+          saveDishesToStorage();
+          saveInstructorsToStorage();
+          localStorage.setItem(KEY_CHEFS_COUNT, DEFAULT_JUNIOR_CHEFS);
+          document.getElementById('adminChefCountInput').value = DEFAULT_JUNIOR_CHEFS;
+          updateJuniorChefCountDisplays();
+          renderAllViews();
+          showToast('Data reset to defaults!');
+        }
+      );
+    }
+
+    // CUSTOM CONFIRMATION MODAL
+    function openConfirmModal(title, message, onConfirm) {
+      document.getElementById('confirmTitle').textContent = title;
+      document.getElementById('confirmMessage').textContent = message;
+      const modal = document.getElementById('confirmModal');
+      
+      const okBtn = document.getElementById('confirmOkBtn');
+      const cancelBtn = document.getElementById('confirmCancelBtn');
+
+      const cleanup = () => { modal.classList.add('hidden'); };
+
+      okBtn.onclick = () => { onConfirm(); cleanup(); };
+      cancelBtn.onclick = cleanup;
+
+      modal.classList.remove('hidden');
+    }
+
+    // TOAST NOTIFICATIONS
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto flex items-center gap-2 px-4 py-3 rounded-2xl bg-maroon-900 text-white text-xs font-bold shadow-2xl border border-gold-500/30 transition-all duration-300 translate-y-4 opacity-0`;
+      toast.innerHTML = `
+        <i data-lucide="sparkles" class="w-4 h-4 text-gold-400 shrink-0"></i>
+        <span>${msg}</span>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      requestAnimationFrame(() => { toast.classList.remove('translate-y-4', 'opacity-0'); });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
